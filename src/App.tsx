@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StatusBar, useColorScheme } from 'react-native';
 import { Button, Dialog, MD3DarkTheme, MD3LightTheme, PaperProvider, Portal, Text } from 'react-native-paper';
+import useDarkMode from './hooks/useDarkMode';
 
 const themes = {
   lightTheme: {
@@ -12,7 +13,7 @@ const themes = {
 };
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useDarkMode();
 
   return (
     <PaperProvider theme={isDarkMode ? themes.darkTheme : themes.lightTheme}>
@@ -22,7 +23,7 @@ function App(): JSX.Element {
 }
 
 function HomePage(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useDarkMode();
   const backgroundStyle = { backgroundColor: isDarkMode ? '#323232' : '#e1e1e1' };
   const [visible, setVisible] = React.useState(false);
 
