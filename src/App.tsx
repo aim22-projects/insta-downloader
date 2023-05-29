@@ -1,8 +1,7 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StatusBar } from 'react-native';
-import { Button, Dialog, MD3DarkTheme, MD3LightTheme, PaperProvider, Portal, Text } from 'react-native-paper';
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper';
 import useDarkMode from './hooks/useDarkMode';
-import useVisibility from './hooks/useVisibility';
+import HomePage from './pages/HomePage';
 
 const themes = {
   lightTheme: {
@@ -13,7 +12,7 @@ const themes = {
   }
 };
 
-function App(): JSX.Element {
+export default function App(): JSX.Element {
   const isDarkMode = useDarkMode();
 
   return (
@@ -22,38 +21,3 @@ function App(): JSX.Element {
     </PaperProvider>
   );
 }
-
-function HomePage(): JSX.Element {
-  const isDarkMode = useDarkMode();
-  const backgroundStyle = { backgroundColor: isDarkMode ? '#323232' : '#e1e1e1' };
-  const [visible, showDialog, hideDialog] = useVisibility(false);
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
-      <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
-        <Text>App.tsx</Text>
-        <Button onPress={showDialog}>Show Dialog</Button>
-        <SampleDialog visible={visible} hideDialog={hideDialog} />
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-function SampleDialog({ visible, hideDialog }: { visible: boolean, hideDialog: () => void }): JSX.Element {
-  return (
-    <Portal>
-      <Dialog visible={visible} onDismiss={hideDialog}>
-        <Dialog.Title>Alert</Dialog.Title>
-        <Dialog.Content>
-          <Text variant="bodyMedium">This is simple dialog</Text>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={hideDialog}>Done</Button>
-        </Dialog.Actions>
-      </Dialog>
-    </Portal>
-  );
-}
-
-export default App;
