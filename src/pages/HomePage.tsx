@@ -1,6 +1,6 @@
+import { ScrollView, StatusBar } from "react-native";
 import { Appbar, Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView, StatusBar, Text } from "react-native";
 import SampleDialog from "../components/SampleDialog";
 import useDarkMode from "../hooks/useDarkMode";
 import useVisibility from "../hooks/useVisibility";
@@ -13,12 +13,12 @@ export default function HomePage(): JSX.Element {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={backgroundStyle.backgroundColor} />
+      <SampleDialog visible={visible} hideDialog={hideDialog} />
       <Appbar.Header>
         <Appbar.Content title="Home" />
       </Appbar.Header>
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
         <Button onPress={showDialog}>Show Dialog</Button>
-        <SampleDialog visible={visible} hideDialog={hideDialog} />
       </ScrollView>
     </SafeAreaView>
   );
