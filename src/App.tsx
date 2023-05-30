@@ -5,10 +5,12 @@ import HomePage from './pages/HomePage';
 
 const themes = {
   lightTheme: {
-    ...MD3LightTheme
+    ...MD3LightTheme,
+    roundness : 2
   },
   darkTheme: {
-    ...MD3DarkTheme
+    ...MD3DarkTheme,
+    roundness : 2
   }
 };
 
