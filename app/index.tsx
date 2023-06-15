@@ -1,9 +1,9 @@
-import { Text } from "react-native";
+import { Text } from "react-native-paper";
 
 export default function () {
     return (
         <>
-            <Text>Hello World</Text>
+            <Text variant="labelMedium">Hello World</Text>
         </>
     );
 }
