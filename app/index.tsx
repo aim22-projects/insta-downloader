@@ -7,9 +7,10 @@ export default function () {
     const { colors } = useTheme();
     return (
         <PageContainer>
-            <Appbar.Header>
-                <Appbar.Content title="Insta Downloader" />
+            <Appbar.Header mode="center-aligned">
                 <Appbar.Action icon="menu" />
+                <Appbar.Content title="Downloads" />
+                <Appbar.Action icon="cog" />
             </Appbar.Header>
             {/* <StatusBar backgroundColor={colors.elevation.level3} /> */}
             <ScrollView horizontal style={{ flexGrow: 0 }} showsHorizontalScrollIndicator={false}>
@@ -23,7 +24,6 @@ export default function () {
             </ScrollView>
 
             <List.Section>
-                <List.Subheader>Downloads</List.Subheader>
                 <FlatList
                     ItemSeparatorComponent={() => <Divider />}
                     data={[1, 2, 3, 4, 5, 6]}
