@@ -1,4 +1,4 @@
-import { Appbar, Chip, Divider, IconButton, List, ProgressBar, Searchbar, Text, useTheme } from "react-native-paper";
+import { Appbar, Chip, Divider, FAB, IconButton, List, ProgressBar, Searchbar, Text, useTheme } from "react-native-paper";
 import PageContainer from "../src/components/page.container";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { StatusBar, View } from "react-native";
@@ -51,6 +51,8 @@ export default function () {
                     />
                 )}>
             </FlatList>
+
+            <FAB icon={"plus"} style={{ position: 'absolute', bottom: 16, right: 16 }} />
         </PageContainer>
     );
 }
