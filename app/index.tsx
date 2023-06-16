@@ -23,36 +23,34 @@ export default function () {
                 </View>
             </ScrollView>
 
-            <List.Section>
-                <FlatList
-                    ItemSeparatorComponent={() => <Divider />}
-                    data={[1, 2, 3, 4, 5, 6]}
-                    renderItem={({ item }) => (
-                        <List.Item
-                            title={`item ${item}`}
-                            left={params =>
-                                <IconButton {...params} icon="play" onPress={() => { }} />
-                            }
-                            right={params =>
-                                <IconButton {...params} icon="close" onPress={() => { }} />
-                            }
-                            onPress={() => { }}
-                            description={
-                                params => (
-                                    <View {...params} style={{ paddingVertical: 4 }}>
-                                        <ProgressBar progress={0.4} />
-                                        <Text>
-                                            11% •
-                                            22 KB/2 MB •
-                                            paused
-                                        </Text>
-                                    </View>
-                                )
-                            }
-                        />
-                    )}>
-                </FlatList>
-            </List.Section>
+            <FlatList
+                ItemSeparatorComponent={() => <Divider />}
+                data={[1, 2, 3, 4, 5, 6]}
+                renderItem={({ item }) => (
+                    <List.Item
+                        title={`item ${item}`}
+                        left={params =>
+                            <IconButton {...params} icon="play" onPress={() => { }} />
+                        }
+                        right={params =>
+                            <IconButton {...params} icon="close" onPress={() => { }} />
+                        }
+                        onPress={() => { }}
+                        description={
+                            params => (
+                                <View {...params} style={{ paddingVertical: 4 }}>
+                                    <ProgressBar progress={0.4} />
+                                    <Text>
+                                        11% •
+                                        22 KB/2 MB •
+                                        paused
+                                    </Text>
+                                </View>
+                            )
+                        }
+                    />
+                )}>
+            </FlatList>
         </PageContainer>
     );
 }
