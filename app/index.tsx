@@ -10,7 +10,7 @@ export default function () {
             <Appbar.Header mode="center-aligned">
                 <Appbar.Action icon="menu" />
                 <Appbar.Content title="Downloads" />
-                <Appbar.Action icon="cog" />
+                <Appbar.Action icon="settings" />
             </Appbar.Header>
             {/* <StatusBar backgroundColor={colors.elevation.level3} /> */}
             <ScrollView horizontal style={{ flexGrow: 0 }} showsHorizontalScrollIndicator={false}>
@@ -18,7 +18,7 @@ export default function () {
                     <Chip children={"All"} />
                     <Chip icon={"check"} children={"Complete"} />
                     <Chip icon={"close"} children={"Failed"} />
-                    <Chip icon={"play"} children={"Running"} />
+                    <Chip icon={"play-arrow"} children={"Running"} />
                     <Chip icon={"stop"} children={"Stopped"} />
                 </View>
             </ScrollView>
@@ -31,7 +31,7 @@ export default function () {
                         <List.Item
                             title={`item ${item}`}
                             left={params =>
-                                <IconButton {...params} icon="play" onPress={() => { }} />
+                                <IconButton {...params} icon="play-arrow" onPress={() => { }} />
                             }
                             right={params =>
                                 <IconButton {...params} icon="close" onPress={() => { }} />
