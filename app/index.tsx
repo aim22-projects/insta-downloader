@@ -5,7 +5,7 @@ import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, P
 import PageContainer from "../src/components/page.container";
 import useVisibility from "../src/hooks/useVisibility";
 
-
+type IDownloadStatus = undefined | 'complete' | 'failed' | 'running';
 interface IDownloadTask {
     title: string,
     mediaType: 'video' | 'image',
@@ -18,13 +18,13 @@ interface IDownloadTask {
 const downloadTasks: IDownloadTask[] = [
     { title: 'Task 1', mediaType: 'image', downloadedSize: 10, totalSize: 100, status: 'running', url: '' },
     { title: 'Task 2', mediaType: 'image', downloadedSize: 20, totalSize: 100, status: 'running', url: '' },
-    { title: 'Task 3', mediaType: 'image', downloadedSize: 30, totalSize: 100, status: 'running', url: '' },
-    { title: 'Task 4', mediaType: 'image', downloadedSize: 40, totalSize: 100, status: 'running', url: '' },
-    { title: 'Task 5', mediaType: 'image', downloadedSize: 50, totalSize: 100, status: 'running', url: '' },
+    { title: 'Task 3', mediaType: 'image', downloadedSize: 30, totalSize: 100, status: 'failed', url: '' },
+    { title: 'Task 4', mediaType: 'image', downloadedSize: 40, totalSize: 100, status: 'failed', url: '' },
+    { title: 'Task 5', mediaType: 'image', downloadedSize: 100, totalSize: 100, status: 'complete', url: '' },
 ];
 
 export default function () {
-    const [filter, setFilter] = useState(0);
+    const [filter, setFilter] = useState<IDownloadStatus>();
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
 
     return (
@@ -39,7 +39,7 @@ export default function () {
 
             <FilterBar filter={filter} setFilter={setFilter} />
 
-            <DownloadList />
+            <DownloadList data={downloadTasks.filter(task => filter ? task.status === filter : true)} />
 
             <FAB
                 icon={"add"}
@@ -50,24 +50,24 @@ export default function () {
     );
 }
 
-function FilterBar({ filter, setFilter }: { filter: number, setFilter: (value: number) => void }) {
+function FilterBar({ filter, setFilter }: { filter: IDownloadStatus | undefined, setFilter: (value: IDownloadStatus) => void }) {
     return (
         <ScrollView horizontal style={{ flexGrow: 0, flexShrink: 0 }} showsHorizontalScrollIndicator={false}>
             <View style={{ padding: 4, gap: 4, flexDirection: 'row' }}>
-                <Chip children={"All"} selected={filter === 0} onPress={() => setFilter(0)} />
-                <Chip icon={"check"} children={"Complete"} selected={filter === 1} onPress={() => setFilter(1)} />
-                <Chip icon={"close"} children={"Failed"} selected={filter === 2} onPress={() => setFilter(2)} />
-                <Chip icon={"play-arrow"} children={"Running"} selected={filter === 3} onPress={() => setFilter(3)} />
+                <Chip children={"All"} selected={!filter} onPress={() => setFilter(undefined)} />
+                <Chip icon={"check"} children={"Complete"} selected={filter === 'complete'} onPress={() => setFilter('complete')} />
+                <Chip icon={"close"} children={"Failed"} selected={filter === 'failed'} onPress={() => setFilter('failed')} />
+                <Chip icon={"play-arrow"} children={"Running"} selected={filter === 'running'} onPress={() => setFilter('running')} />
             </View>
         </ScrollView>
     );
 }
 
-function DownloadList() {
+function DownloadList({ data }: { data: IDownloadTask[] }) {
     return (
         <FlatList
             ItemSeparatorComponent={() => <Divider />}
-            data={downloadTasks}
+            data={data}
             renderItem={({ item }) => (
                 <List.Item
                     title={item.title}
@@ -79,8 +79,8 @@ function DownloadList() {
                             <View {...params} style={{ paddingVertical: 4 }}>
                                 <ProgressBar progress={item.downloadedSize / item.totalSize} />
                                 <Text>
-                                    {item.downloadedSize * 100 / item.totalSize}% •
-                                    {item.downloadedSize} KB/ {item.totalSize} MB •
+                                    {item.downloadedSize * 100 / item.totalSize}% • 
+                                    {item.downloadedSize} KB/ {item.totalSize} MB • 
                                     {item.status}
                                 </Text>
                             </View>
