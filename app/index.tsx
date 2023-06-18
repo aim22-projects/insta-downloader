@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, Text, TextInput } from "react-native-paper";
+import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, Snackbar, Text, TextInput } from "react-native-paper";
 import PageContainer from "../src/components/page.container";
 import useVisibility from "../src/hooks/useVisibility";
 
@@ -26,10 +26,11 @@ const downloadTasks: IDownloadTask[] = [
 export default function () {
     const [filter, setFilter] = useState<IDownloadStatus>();
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
+    const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
 
     return (
         <PageContainer>
-            <AddDownloadDialog visible={dialogVisibility} hideDialog={hideDialog} />
+            <NewDownloadSnackbar visible={snackbarVisibility} hideSnackbar={hideSnackbar} />
 
             <Appbar.Header mode="center-aligned">
                 <Appbar.Action icon="menu" />
@@ -106,5 +107,13 @@ function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDial
                 </Dialog.Actions>
             </Dialog>
         </Portal>
+    );
+}
+
+function NewDownloadSnackbar({ visible, hideSnackbar }: { visible: boolean, hideSnackbar: () => void }) {
+    return (
+        <Snackbar visible={visible} onDismiss={hideSnackbar} >
+            New download task added
+        </Snackbar>
     );
 }
