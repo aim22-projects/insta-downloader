@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { Appbar, Avatar, Chip, Divider, FAB, IconButton, List, ProgressBar, Text } from "react-native-paper";
+import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, Text, TextInput } from "react-native-paper";
 import PageContainer from "../src/components/page.container";
+import useVisibility from "../src/hooks/useVisibility";
 
 export default function () {
     const [filter, setFilter] = useState(0);
+    const [dialogVisibility, showDialog, hideDialog] = useVisibility();
 
     return (
         <PageContainer>
+            <AddDownloadDialog visible={dialogVisibility} hideDialog={hideDialog} />
+
             <Appbar.Header mode="center-aligned">
                 <Appbar.Action icon="menu" />
                 <Appbar.Content title="Downloads" />
@@ -19,7 +23,7 @@ export default function () {
 
             <DownloadList />
 
-            <FAB icon={"add"} style={{ position: 'absolute', bottom: 16, right: 16 }} />
+            <FAB icon={"add"} style={{ position: 'absolute', bottom: 16, right: 16 }} onPress={showDialog} />
         </PageContainer>
     );
 }
@@ -63,5 +67,22 @@ function DownloadList() {
                 />
             )}>
         </FlatList>
+    );
+}
+
+function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDialog: () => void }) {
+    return (
+        <Portal>
+            <Dialog visible={visible} onDismiss={hideDialog} >
+                <Dialog.Title>Add Download</Dialog.Title>
+                <Dialog.Content>
+                    <TextInput mode="outlined" placeholder="post url"/>
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <Button onPress={hideDialog}>Cancel</Button>
+                    <Button onPress={hideDialog}>Add</Button>
+                </Dialog.Actions>
+            </Dialog>
+        </Portal>
     );
 }
