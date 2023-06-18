@@ -5,6 +5,24 @@ import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, P
 import PageContainer from "../src/components/page.container";
 import useVisibility from "../src/hooks/useVisibility";
 
+
+interface IDownloadTask {
+    title: string,
+    mediaType: 'video' | 'image',
+    downloadedSize: number,
+    totalSize: number,
+    status: 'complete' | 'failed' | 'running',
+    url: string,
+};
+
+const downloadTasks: IDownloadTask[] = [
+    { title: 'Task 1', mediaType: 'image', downloadedSize: 10, totalSize: 100, status: 'running', url: '' },
+    { title: 'Task 2', mediaType: 'image', downloadedSize: 20, totalSize: 100, status: 'running', url: '' },
+    { title: 'Task 3', mediaType: 'image', downloadedSize: 30, totalSize: 100, status: 'running', url: '' },
+    { title: 'Task 4', mediaType: 'image', downloadedSize: 40, totalSize: 100, status: 'running', url: '' },
+    { title: 'Task 5', mediaType: 'image', downloadedSize: 50, totalSize: 100, status: 'running', url: '' },
+];
+
 export default function () {
     const [filter, setFilter] = useState(0);
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
@@ -49,21 +67,21 @@ function DownloadList() {
     return (
         <FlatList
             ItemSeparatorComponent={() => <Divider />}
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]}
+            data={downloadTasks}
             renderItem={({ item }) => (
                 <List.Item
-                    title={`item ${item}`}
+                    title={item.title}
                     left={params => <Avatar.Icon {...params} size={48} icon={"image"} color="white" />}
                     right={params => <IconButton {...params} icon="close" onPress={() => { }} />}
                     onPress={() => { }}
                     description={
                         params => (
                             <View {...params} style={{ paddingVertical: 4 }}>
-                                <ProgressBar progress={0.4} />
+                                <ProgressBar progress={item.downloadedSize / item.totalSize} />
                                 <Text>
-                                    11% •
-                                    22 KB/2 MB •
-                                    paused
+                                    {item.downloadedSize * 100 / item.totalSize}% •
+                                    {item.downloadedSize} KB/ {item.totalSize} MB •
+                                    {item.status}
                                 </Text>
                             </View>
                         )
