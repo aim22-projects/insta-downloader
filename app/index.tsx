@@ -12,7 +12,7 @@ export default function () {
             <Appbar.Header mode="center-aligned">
                 <Appbar.Action icon="menu" />
                 <Appbar.Content title="Downloads" />
-                <Appbar.Action icon="cog" />
+                <Appbar.Action icon="settings" />
             </Appbar.Header>
             {/* <StatusBar backgroundColor={colors.elevation.level3} /> */}
             <ScrollView horizontal style={{ flexGrow: 0, flexShrink: 0 }} showsHorizontalScrollIndicator={false}>
@@ -29,28 +29,28 @@ export default function () {
                 ItemSeparatorComponent={() => <Divider />}
                 data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]}
                 renderItem={({ item }) => (
-                    <List.Item
-                        title={`item ${item}`}
-                        left={params =>
-                            <IconButton {...params} icon="play" onPress={() => { }} />
-                        }
-                        right={params =>
-                            <IconButton {...params} icon="close" onPress={() => { }} />
-                        }
-                        onPress={() => { }}
-                        description={
-                            params => (
-                                <View {...params} style={{ paddingVertical: 4 }}>
-                                    <ProgressBar progress={0.4} />
-                                    <Text>
-                                        11% •
-                                        22 KB/2 MB •
-                                        paused
-                                    </Text>
-                                </View>
-                            )
-                        }
-                    />
+                     <List.Item
+                            title={`item ${item}`}
+                            left={params =>
+                                <IconButton {...params} icon="play-arrow" onPress={() => { }} />
+                            }
+                            right={params =>
+                                <IconButton {...params} icon="close" onPress={() => { }} />
+                            }
+                            onPress={() => { }}
+                            description={
+                                params => (
+                                    <View {...params} style={{ paddingVertical: 4 }}>
+                                        <ProgressBar progress={0.4} />
+                                        <Text>
+                                            11% •
+                                            22 KB/2 MB •
+                                            paused
+                                        </Text>
+                                    </View>
+                                )
+                            }
+                        />
                 )}>
             </FlatList>
 
