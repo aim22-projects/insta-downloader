@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, Snackbar, Text, TextInput } from "react-native-paper";
@@ -23,13 +23,22 @@ const downloadTasks: IDownloadTask[] = [
     { title: 'Task 5', mediaType: 'image', downloadedSize: 100, totalSize: 100, status: 'complete', url: '' },
 ];
 
+const snackbarHeight = 48 + 8;// height: 48 + margin: 8 // taken from code
+
 export default function () {
     const [filter, setFilter] = useState<IDownloadStatus>();
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
     const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
 
+    const clodeDialog = useCallback((value: string | undefined) => {
+        if (value) showSnackbar();
+        hideDialog();
+    }, []);
+
     return (
         <PageContainer>
+            <AddDownloadDialog visible={dialogVisibility} hideDialog={clodeDialog} />
+
             <NewDownloadSnackbar visible={snackbarVisibility} hideSnackbar={hideSnackbar} />
 
             <Appbar.Header mode="center-aligned">
@@ -44,8 +53,9 @@ export default function () {
 
             <FAB
                 icon={"add"}
-                label="Add"
-                style={{ position: 'absolute', bottom: 16, right: 16 }}
+                label="Addd"
+                variant="tertiary"
+                style={{ position: 'absolute', bottom: snackbarVisibility ? snackbarHeight + 16 : 16, right: 16 }}
                 onPress={showDialog} />
         </PageContainer>
     );
@@ -80,8 +90,8 @@ function DownloadList({ data }: { data: IDownloadTask[] }) {
                             <View {...params} style={{ paddingVertical: 4 }}>
                                 <ProgressBar progress={item.downloadedSize / item.totalSize} />
                                 <Text>
-                                    {item.downloadedSize * 100 / item.totalSize}% • 
-                                    {item.downloadedSize} KB/ {item.totalSize} MB • 
+                                    {item.downloadedSize * 100 / item.totalSize}% •
+                                    {item.downloadedSize} KB/ {item.totalSize} MB •
                                     {item.status}
                                 </Text>
                             </View>
@@ -93,17 +103,23 @@ function DownloadList({ data }: { data: IDownloadTask[] }) {
     );
 }
 
-function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDialog: () => void }) {
+function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDialog: (value: string | undefined) => void }) {
+    const [url, setUrl] = useState<string>("");
     return (
         <Portal>
-            <Dialog visible={visible} onDismiss={hideDialog} >
+            <Dialog visible={visible} onDismiss={() => hideDialog(undefined)} >
                 <Dialog.Title>Add Download</Dialog.Title>
                 <Dialog.Content>
-                    <TextInput mode="outlined" placeholder="post url" theme={{ roundness: 8 }} />
+                    <TextInput
+                        mode="outlined"
+                        placeholder="post url"
+                        theme={{ roundness: 8 }}
+                        value={url}
+                        onChangeText={setUrl} />
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <Button onPress={hideDialog}>Cancel</Button>
-                    <Button onPress={hideDialog}>Add</Button>
+                    <Button onPress={() => hideDialog(undefined)}>Cancel</Button>
+                    <Button onPress={() => hideDialog(url)}>Add</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>
