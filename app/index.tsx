@@ -23,7 +23,11 @@ export default function () {
 
             <DownloadList />
 
-            <FAB icon={"add"} style={{ position: 'absolute', bottom: 16, right: 16 }} onPress={showDialog} />
+            <FAB
+                icon={"add"}
+                label="Add"
+                style={{ position: 'absolute', bottom: 16, right: 16 }}
+                onPress={showDialog} />
         </PageContainer>
     );
 }
@@ -76,7 +80,7 @@ function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDial
             <Dialog visible={visible} onDismiss={hideDialog} >
                 <Dialog.Title>Add Download</Dialog.Title>
                 <Dialog.Content>
-                    <TextInput mode="outlined" placeholder="post url"/>
+                    <TextInput mode="outlined" placeholder="post url" theme={{ roundness: 8 }} />
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button onPress={hideDialog}>Cancel</Button>
