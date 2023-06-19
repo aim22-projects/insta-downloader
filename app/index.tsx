@@ -26,6 +26,7 @@ const downloadTasks: IDownloadTask[] = [
 const snackbarHeight = 48 + 8;// height: 48 + margin: 8 // taken from code
 
 export default function () {
+    const [downloads, setDownloads] = useState<IDownloadTask[]>(downloadTasks);
     const [filter, setFilter] = useState<IDownloadStatus>();
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
     const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
@@ -49,7 +50,7 @@ export default function () {
 
             <FilterBar filter={filter} setFilter={setFilter} />
 
-            <DownloadList data={downloadTasks.filter(task => filter ? task.status === filter : true)} />
+            <DownloadList data={downloads.filter(task => filter ? task.status === filter : true)} />
 
             <FAB
                 icon={"add"}
