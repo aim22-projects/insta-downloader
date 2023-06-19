@@ -1,8 +1,8 @@
 {
   "expo": {
-    "scheme": "inst_downloader",
-    "name": "inst_downloader",
-    "slug": "inst_downloader",
+    "scheme": "insta",
+    "name": "insta_downloader",
+    "slug": "insta_downloader",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,11 +35,17 @@
             "DEFAULT"
           ]
         }
-      ]
+      ],
+      "package": "com.project.insta_downloader"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "abd8d3a5-dd73-4bd0-830b-76358ea9c7cb"
+      }
     }
   }
 }
