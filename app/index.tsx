@@ -32,7 +32,17 @@ export default function () {
     const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
 
     const clodeDialog = useCallback((value: string | undefined) => {
-        if (value) showSnackbar();
+        if (value) {
+            showSnackbar();
+            setDownloads(_downloads => [..._downloads, {
+                title: 'new',
+                mediaType: 'image',
+                downloadedSize: 70,
+                totalSize: 100,
+                status: 'running',
+                url: value
+            }]);
+        }
         hideDialog();
     }, []);
 
