@@ -35,11 +35,17 @@
             "DEFAULT"
           ]
         }
-      ]
+      ],
+      "package": "com.project.insta_downloader"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9dc2b5bd-8100-4cd1-95a3-78b2fc220f2b"
+      }
     }
   }
 }
