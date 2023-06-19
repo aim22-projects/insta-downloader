@@ -20,7 +20,7 @@ const downloadTasks: IDownloadTask[] = [
     { title: 'Task 2', mediaType: 'image', downloadedSize: 20, totalSize: 100, status: 'running', url: '' },
     { title: 'Task 3', mediaType: 'image', downloadedSize: 30, totalSize: 100, status: 'failed', url: '' },
     { title: 'Task 4', mediaType: 'image', downloadedSize: 40, totalSize: 100, status: 'failed', url: '' },
-    { title: 'Task 5', mediaType: 'image', downloadedSize: 100, totalSize: 100, status: 'complete', url: '' },
+    { title: 'Task 5', mediaType: 'video', downloadedSize: 100, totalSize: 100, status: 'complete', url: '' },
 ];
 
 const snackbarHeight = 48 + 8;// height: 48 + margin: 8 // taken from code
@@ -82,24 +82,37 @@ function DownloadList({ data }: { data: IDownloadTask[] }) {
             renderItem={({ item }) => (
                 <List.Item
                     title={item.title}
-                    left={params => <Avatar.Icon {...params} size={48} icon={"image"} color="white" />}
-                    right={params => <IconButton {...params} icon="close" onPress={() => { }} />}
+                    left={params => <Avatar.Icon {...params} size={48} icon={item.mediaType === 'image' ? 'image' : 'movie'} color="white" />}
+                    right={params => item.status !== 'complete' && <IconButton {...params} icon="close" onPress={() => { }} />}
                     onPress={() => { }}
-                    description={
-                        params => (
+                    description={params =>
+                        item.status === 'complete' ? (
+                            <Text>
+                                {
+                                    [
+                                        item.totalSize + ' MB',
+                                        item.status
+                                    ].join(" • ")
+                                }
+                            </Text>
+                        ) : (
                             <View {...params} style={{ paddingVertical: 4 }}>
                                 <ProgressBar progress={item.downloadedSize / item.totalSize} />
                                 <Text>
-                                    {item.downloadedSize * 100 / item.totalSize}% •
-                                    {item.downloadedSize} KB/ {item.totalSize} MB •
-                                    {item.status}
+                                    {
+                                        [
+                                            item.downloadedSize * 100 / item.totalSize,
+                                            item.downloadedSize + ' KB / ' + item.totalSize + ' MB ',
+                                            item.status
+                                        ].join(" • ")
+                                    }
                                 </Text>
                             </View>
                         )
                     }
                 />
             )}>
-        </FlatList>
+        </FlatList >
     );
 }
 
