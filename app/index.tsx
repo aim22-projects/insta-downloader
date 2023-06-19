@@ -67,7 +67,7 @@ export default function () {
                     { value: '', label: 'All' },
                     { value: 'complete', label: 'Done', icon: 'check' },
                     { value: 'running', label: 'Running', icon: 'play-arrow' },
-                    { value: 'stop', label: 'Failed', icon: 'close' }
+                    { value: 'failed', label: 'Failed', icon: 'close' }
                 ]} />
 
 
