@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "insta_downloader",
+    "scheme": "insta",
     "name": "insta_downloader",
     "slug": "insta_downloader",
     "version": "1.0.0",
@@ -44,7 +44,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cfba8ef7-ee18-4041-8ed3-9b84d5d1294a"
+        "projectId": "abd8d3a5-dd73-4bd0-830b-76358ea9c7cb"
       }
     }
   }
