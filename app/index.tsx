@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, Snackbar, Text, TextInput } from "react-native-paper";
+import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, SegmentedButtons, Snackbar, Text, TextInput } from "react-native-paper";
 import PageContainer from "../src/components/page.container";
 import useVisibility from "../src/hooks/useVisibility";
 
 type IDownloadStatus = undefined | 'complete' | 'failed' | 'running';
+type IFilter = '' | 'complete' | 'running' | 'failed';
 interface IDownloadTask {
     title: string,
     mediaType: 'video' | 'image',
@@ -27,7 +28,7 @@ const snackbarHeight = 48 + 8;// height: 48 + margin: 8 // taken from code
 
 export default function () {
     const [downloads, setDownloads] = useState<IDownloadTask[]>(downloadTasks);
-    const [filter, setFilter] = useState<IDownloadStatus>();
+    const [filter, setFilter] = useState<string>('');
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
     const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
 
@@ -52,13 +53,23 @@ export default function () {
 
             <NewDownloadSnackbar visible={snackbarVisibility} hideSnackbar={hideSnackbar} />
 
-            <Appbar.Header mode="center-aligned">
-                <Appbar.Action icon="menu" />
+            <Appbar.Header >
+                {/* <Appbar.Action icon="menu" /> */}
                 <Appbar.Content title="Downloads" />
                 <Appbar.Action icon="settings" />
             </Appbar.Header>
 
-            <FilterBar filter={filter} setFilter={setFilter} />
+            <SegmentedButtons
+                value={filter}
+                style={{ paddingHorizontal: 8 }}
+                onValueChange={setFilter}
+                buttons={[
+                    { value: '', label: 'All' },
+                    { value: 'complete', label: 'Done', icon: 'check' },
+                    { value: 'running', label: 'Running', icon: 'play-arrow' },
+                    { value: 'stop', label: 'Failed', icon: 'close' }
+                ]} />
+
 
             <DownloadList data={downloads.filter(task => filter ? task.status === filter : true)} />
 
@@ -72,18 +83,18 @@ export default function () {
     );
 }
 
-function FilterBar({ filter, setFilter }: { filter: IDownloadStatus | undefined, setFilter: (value: IDownloadStatus) => void }) {
-    return (
-        <ScrollView horizontal style={{ flexGrow: 0, flexShrink: 0 }} showsHorizontalScrollIndicator={false}>
-            <View style={{ padding: 4, gap: 4, flexDirection: 'row' }}>
-                <Chip children={"All"} selected={!filter} onPress={() => setFilter(undefined)} />
-                <Chip icon={"check"} children={"Complete"} selected={filter === 'complete'} onPress={() => setFilter('complete')} />
-                <Chip icon={"close"} children={"Failed"} selected={filter === 'failed'} onPress={() => setFilter('failed')} />
-                <Chip icon={"play-arrow"} children={"Running"} selected={filter === 'running'} onPress={() => setFilter('running')} />
-            </View>
-        </ScrollView>
-    );
-}
+// function FilterBar({ filter, setFilter }: { filter: IDownloadStatus | undefined, setFilter: (value: IDownloadStatus) => void }) {
+//     return (
+//         <ScrollView horizontal style={{ flexGrow: 0, flexShrink: 0 }} showsHorizontalScrollIndicator={false}>
+//             <View style={{ padding: 4, gap: 4, flexDirection: 'row' }}>
+//                 <Chip children={"All"} selected={!filter} onPress={() => setFilter(undefined)} />
+//                 <Chip icon={"check"} children={"Complete"} selected={filter === 'complete'} onPress={() => setFilter('complete')} />
+//                 <Chip icon={"close"} children={"Failed"} selected={filter === 'failed'} onPress={() => setFilter('failed')} />
+//                 <Chip icon={"play-arrow"} children={"Running"} selected={filter === 'running'} onPress={() => setFilter('running')} />
+//             </View>
+//         </ScrollView>
+//     );
+// }
 
 function DownloadList({ data }: { data: IDownloadTask[] }) {
     return (
