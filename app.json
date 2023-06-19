@@ -1,8 +1,8 @@
 {
   "expo": {
-    "scheme": "inst_downloader",
-    "name": "inst_downloader",
-    "slug": "inst_downloader",
+    "scheme": "insta_downloader",
+    "name": "insta_downloader",
+    "slug": "insta_downloader",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -44,7 +44,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "9dc2b5bd-8100-4cd1-95a3-78b2fc220f2b"
+        "projectId": "cfba8ef7-ee18-4041-8ed3-9b84d5d1294a"
       }
     }
   }
