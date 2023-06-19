@@ -49,12 +49,11 @@ export default function () {
 
     return (
         <PageContainer>
-            <AddDownloadDialog visible={dialogVisibility} hideDialog={clodeDialog} />
+            {dialogVisibility && <AddDownloadDialog visible={dialogVisibility} hideDialog={clodeDialog} />}
 
             <NewDownloadSnackbar visible={snackbarVisibility} hideSnackbar={hideSnackbar} />
 
-            <Appbar.Header >
-                {/* <Appbar.Action icon="menu" /> */}
+            <Appbar.Header>
                 <Appbar.Content title="Downloads" />
                 <Appbar.Action icon="settings" />
             </Appbar.Header>
@@ -82,19 +81,6 @@ export default function () {
         </PageContainer>
     );
 }
-
-// function FilterBar({ filter, setFilter }: { filter: IDownloadStatus | undefined, setFilter: (value: IDownloadStatus) => void }) {
-//     return (
-//         <ScrollView horizontal style={{ flexGrow: 0, flexShrink: 0 }} showsHorizontalScrollIndicator={false}>
-//             <View style={{ padding: 4, gap: 4, flexDirection: 'row' }}>
-//                 <Chip children={"All"} selected={!filter} onPress={() => setFilter(undefined)} />
-//                 <Chip icon={"check"} children={"Complete"} selected={filter === 'complete'} onPress={() => setFilter('complete')} />
-//                 <Chip icon={"close"} children={"Failed"} selected={filter === 'failed'} onPress={() => setFilter('failed')} />
-//                 <Chip icon={"play-arrow"} children={"Running"} selected={filter === 'running'} onPress={() => setFilter('running')} />
-//             </View>
-//         </ScrollView>
-//     );
-// }
 
 function DownloadList({ data }: { data: IDownloadTask[] }) {
     return (
@@ -143,9 +129,10 @@ function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDial
     return (
         <Portal>
             <Dialog visible={visible} onDismiss={() => hideDialog(undefined)} >
-                <Dialog.Title>Add Download</Dialog.Title>
+                <Dialog.Title style={{ textAlign: 'center' }}>New Download</Dialog.Title>
                 <Dialog.Content>
                     <TextInput
+                        autoFocus
                         mode="outlined"
                         placeholder="post url"
                         theme={{ roundness: 8 }}
