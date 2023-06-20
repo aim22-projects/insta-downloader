@@ -1,0 +1,5 @@
+@apiEnd = https://www.instagram.com/p
+@postId = Cki76a8sC2t
+
+### fetch post data
+GET {{apiEnd}}/{{postId}}/?__a=1&__d=dis HTTP/1.1
