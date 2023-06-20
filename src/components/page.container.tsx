@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import { StatusBar, View } from "react-native";
-import { useTheme } from "react-native-paper/src/core/theming";
+import { StatusBar, View, useColorScheme } from "react-native";
+import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface IPageContainer {
@@ -10,10 +10,13 @@ interface IPageContainer {
 
 export default function PageContainer({ children, safeArea }: IPageContainer) {
     const { colors } = useTheme();
+    const colorScheme = useColorScheme();
+
     const SelectedView = safeArea ? SafeAreaView : View;
+    const barStyle = colorScheme === 'dark' ? 'light-content' : 'dark-content';
     return (
         <SelectedView style={{ flex: 1, backgroundColor: colors.background }}>
-            <StatusBar barStyle={'dark-content'} />
+            <StatusBar barStyle={barStyle} />
             {children}
         </SelectedView>
     );
