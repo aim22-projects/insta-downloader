@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { StatusBar, View, useColorScheme } from "react-native";
-import { useTheme } from "react-native-paper/src/core/theming";
+import { useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface IPageContainer {
