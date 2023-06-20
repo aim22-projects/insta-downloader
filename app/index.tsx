@@ -84,7 +84,6 @@ export default function () {
             <FAB
                 icon={"add"}
                 label="Addd"
-                variant="tertiary"
                 style={{ position: 'absolute', bottom: snackbarVisibility ? snackbarHeight + 16 : 16, right: 16 }}
                 onPress={showDialog} />
         </PageContainer>
