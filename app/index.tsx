@@ -99,8 +99,8 @@ function DownloadList({ data, removeItem }: { data: IDownloadTask[], removeItem:
             renderItem={({ item }) => (
                 <List.Item
                     title={item.title}
-                    left={params => <Avatar.Icon {...params} size={48} icon={item.mediaType === 'image' ? 'image' : 'movie'} color="white" />}
-                    right={params => <IconButton {...params} icon="close" onPress={() => { removeItem(item.id); }} />}
+                    left={params => <Avatar.Icon style={params.style} size={40} icon={item.mediaType === 'image' ? 'image' : 'movie'} />}
+                    right={params => <IconButton style={params.style} icon="close" onPress={() => { removeItem(item.id); }} />}
                     onPress={() => { }}
                     description={params =>
                         item.status === 'complete' ? (
