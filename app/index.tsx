@@ -1,7 +1,8 @@
+import { Link } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { Appbar, Avatar, Button, Chip, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, SegmentedButtons, Snackbar, Text, TextInput } from "react-native-paper";
+import { FlatList } from "react-native-gesture-handler";
+import { Appbar, Avatar, Button, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, SegmentedButtons, Snackbar, Text, TextInput } from "react-native-paper";
 import PageContainer from "../src/components/page.container";
 import useVisibility from "../src/hooks/useVisibility";
 
@@ -61,7 +62,9 @@ export default function () {
 
             <Appbar.Header>
                 <Appbar.Content title="Downloads" />
-                <Appbar.Action icon="settings" />
+                <Link href={"/settings"} asChild>
+                    <Appbar.Action icon="settings" />
+                </Link>
             </Appbar.Header>
 
             <SegmentedButtons
