@@ -11,7 +11,7 @@ export default function () {
                 <Appbar.Content title="Settings" />
             </Appbar.Header>
             <ScrollView>
-                <List.Section title="App settings">
+                <List.Section title="App settings" style={{ marginVertical: 0 }}>
                     <List.Item
                         left={params => <List.Icon {...params} icon='folder' />}
                         right={params => <List.Icon {...params} icon='chevron-right' />}
@@ -19,18 +19,19 @@ export default function () {
                         description='sdcard/Downloads'
                         onPress={() => { }}
                     />
-                    <List.Item
-                        left={params => <List.Icon {...params} icon='brightness-medium' />}
-                        right={params => <List.Icon {...params} icon='chevron-right' />}
-                        title="Dark mode"
-                        description="Enabled"
-                        onPress={() => { }}
-                    />
+                </List.Section>
+                <List.Section title="App info" style={{ marginVertical: 0 }}>
                     <List.Item
                         left={params => <List.Icon {...params} icon='info' />}
                         right={params => <List.Icon {...params} icon='chevron-right' />}
-                        title='About'
-                        description='App version, Auther'
+                        title='App version'
+                        description='1.0.0-dev'
+                        onPress={() => { }} />
+                    <List.Item
+                        left={params => <List.Icon {...params} icon='person' />}
+                        right={params => <List.Icon {...params} icon='chevron-right' />}
+                        title='Developer'
+                        description='aim22-projects@github.com'
                         onPress={() => { }} />
                 </List.Section>
             </ScrollView>
