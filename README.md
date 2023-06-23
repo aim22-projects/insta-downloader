@@ -51,3 +51,5 @@ module.exports = function (api) {
   };
 };
 ```
+
+# also check expo prebuilt
