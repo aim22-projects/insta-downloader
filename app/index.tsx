@@ -27,11 +27,16 @@ const downloadTasks: IDownloadTask[] = [
 ];
 
 const snackbarHeight = 48 + 8;// height: 48 + margin: 8 // taken from code
-
+const filterButtons = [
+    { value: '', label: 'All', icon: 'all-inbox' },
+    { value: 'complete', label: 'Done', icon: 'file-download-done' },
+    { value: 'running', label: 'Running', icon: 'file-download' },
+    { value: 'failed', label: 'Failed', icon: 'close' }
+];
 export default function () {
     const router = useRouter();
     const [downloads, setDownloads] = useState<IDownloadTask[]>(downloadTasks);
-    const [filter, setFilter] = useState<string>('');
+    const [filter, setFilter] = useState<string>(filterButtons[0].value);
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
     const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
 
@@ -74,12 +79,7 @@ export default function () {
                 value={filter}
                 style={{ paddingHorizontal: 8 }}
                 onValueChange={setFilter}
-                buttons={[
-                    { value: '', label: 'All' },
-                    { value: 'complete', label: 'Done', icon: 'check' },
-                    { value: 'running', label: 'Running', icon: 'play-arrow' },
-                    { value: 'failed', label: 'Failed', icon: 'close' }
-                ]} />
+                buttons={filterButtons} />
 
 
             <DownloadList data={downloads.filter(task => filter ? task.status === filter : true)} removeItem={removeDownloadtask} />
