@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -29,25 +29,28 @@ const downloadTasks: IDownloadTask[] = [
 const snackbarHeight = 48 + 8;// height: 48 + margin: 8 // taken from code
 
 export default function () {
+    const router = useRouter();
     const [downloads, setDownloads] = useState<IDownloadTask[]>(downloadTasks);
     const [filter, setFilter] = useState<string>('');
     const [dialogVisibility, showDialog, hideDialog] = useVisibility();
     const [snackbarVisibility, showSnackbar, hideSnackbar] = useVisibility();
 
     const clodeDialog = useCallback((value: string | undefined) => {
-        if (value) {
-            showSnackbar();
-            setDownloads(_downloads => [..._downloads, {
-                id: Math.random().toString(36).substring(2, 7),
-                title: 'new',
-                mediaType: 'image',
-                downloadedSize: 70,
-                totalSize: 100,
-                status: 'running',
-                url: value
-            }]);
-        }
         hideDialog();
+        if (value) router.push('/addDownload');
+        // if (value) {
+        //     showSnackbar();
+        //     setDownloads(_downloads => [..._downloads, {
+        //         id: Math.random().toString(36).substring(2, 7),
+        //         title: 'new',
+        //         mediaType: 'image',
+        //         downloadedSize: 70,
+        //         totalSize: 100,
+        //         status: 'running',
+        //         url: value
+        //     }]);
+        // }
+        // hideDialog();
     }, []);
 
     const removeDownloadtask = useCallback((id: string) => {
@@ -83,9 +86,17 @@ export default function () {
 
             <FAB
                 icon={"add"}
-                label="Addd"
+                label="Add"
                 style={{ position: 'absolute', bottom: snackbarVisibility ? snackbarHeight + 16 : 16, right: 16 }}
                 onPress={showDialog} />
+
+            {/* <Link href='/newDownload' asChild>
+                <FAB
+                    icon={"add"}
+                    label="Addd"
+                    style={{ position: 'absolute', bottom: snackbarVisibility ? snackbarHeight + 16 : 16, right: 16 }}
+                />
+            </Link> */}
         </PageContainer>
     );
 }
@@ -138,19 +149,20 @@ function AddDownloadDialog({ visible, hideDialog }: { visible: boolean, hideDial
     return (
         <Portal>
             <Dialog visible={visible} onDismiss={() => hideDialog(undefined)} >
-                <Dialog.Title style={{ textAlign: 'center' }}>New Download</Dialog.Title>
+                <Dialog.Title>New Download</Dialog.Title>
                 <Dialog.Content>
                     <TextInput
                         autoFocus
                         mode="outlined"
-                        placeholder="post url"
+                        label="Instagram Post url"
+                        placeholder="http://insta.com/posts/1"
                         theme={{ roundness: 8 }}
                         value={url}
                         onChangeText={setUrl} />
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <Button onPress={() => hideDialog(undefined)}>Cancel</Button>
-                    <Button onPress={() => hideDialog(url)}>Add</Button>
+                    <Button onPress={() => hideDialog(undefined)} >Cancel</Button>
+                    <Button onPress={() => hideDialog(url)} mode="contained-tonal">Add</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>
