@@ -1,5 +1,5 @@
 import { Link, useRouter } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Appbar, Avatar, Button, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, SegmentedButtons, Snackbar, Text, TextInput } from "react-native-paper";
@@ -62,6 +62,8 @@ export default function () {
         setDownloads(_downloads => _downloads.filter(_item => _item.id !== id));
     }, []);
 
+    const filteredDownloads = useMemo(() => downloads.filter(task => filter ? task.status === filter : true), [filter, downloads]);
+    
     return (
         <PageContainer>
             {dialogVisibility && <AddDownloadDialog visible={dialogVisibility} hideDialog={clodeDialog} />}
@@ -81,8 +83,7 @@ export default function () {
                 onValueChange={setFilter}
                 buttons={filterButtons} />
 
-
-            <DownloadList data={downloads.filter(task => filter ? task.status === filter : true)} removeItem={removeDownloadtask} />
+            <DownloadList data={filteredDownloads} removeItem={removeDownloadtask} />
 
             <FAB
                 icon={"add"}
@@ -90,13 +91,6 @@ export default function () {
                 style={{ position: 'absolute', bottom: snackbarVisibility ? snackbarHeight + 16 : 16, right: 16 }}
                 onPress={showDialog} />
 
-            {/* <Link href='/newDownload' asChild>
-                <FAB
-                    icon={"add"}
-                    label="Addd"
-                    style={{ position: 'absolute', bottom: snackbarVisibility ? snackbarHeight + 16 : 16, right: 16 }}
-                />
-            </Link> */}
         </PageContainer>
     );
 }
