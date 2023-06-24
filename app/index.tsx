@@ -5,6 +5,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { Appbar, Avatar, Button, Dialog, Divider, FAB, IconButton, List, Portal, ProgressBar, SegmentedButtons, Snackbar, Text, TextInput } from "react-native-paper";
 import PageContainer from "../src/components/page.container";
 import useVisibility from "../src/hooks/useVisibility";
+import DownloadTile from "../src/components/download.tile";
 
 type IDownloadStatus = undefined | 'complete' | 'failed' | 'running';
 type IFilter = '' | 'complete' | 'running' | 'failed';
@@ -63,7 +64,7 @@ export default function () {
     }, []);
 
     const filteredDownloads = useMemo(() => downloads.filter(task => filter ? task.status === filter : true), [filter, downloads]);
-    
+
     return (
         <PageContainer>
             {dialogVisibility && <AddDownloadDialog visible={dialogVisibility} hideDialog={clodeDialog} />}
@@ -101,39 +102,7 @@ function DownloadList({ data, removeItem }: { data: IDownloadTask[], removeItem:
             ItemSeparatorComponent={() => <Divider />}
             data={data}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-                <List.Item
-                    title={item.title}
-                    left={params => <Avatar.Icon style={params.style} size={40} icon={item.mediaType === 'image' ? 'image' : 'movie'} />}
-                    right={params => <IconButton style={params.style} icon="close" onPress={() => { removeItem(item.id); }} />}
-                    onPress={() => { }}
-                    description={params =>
-                        item.status === 'complete' ? (
-                            <Text>
-                                {
-                                    [
-                                        item.totalSize + ' MB',
-                                        item.status
-                                    ].join(" • ")
-                                }
-                            </Text>
-                        ) : (
-                            <View {...params} style={{ paddingVertical: 4 }}>
-                                <ProgressBar progress={item.downloadedSize / item.totalSize} />
-                                <Text>
-                                    {
-                                        [
-                                            item.downloadedSize * 100 / item.totalSize,
-                                            item.downloadedSize + ' KB / ' + item.totalSize + ' MB ',
-                                            item.status
-                                        ].join(" • ")
-                                    }
-                                </Text>
-                            </View>
-                        )
-                    }
-                />
-            )}>
+            renderItem={({ item }) => (<DownloadTile  {...item} onLeftPress={(id) => removeItem(id)} />)}>
         </FlatList >
     );
 }
